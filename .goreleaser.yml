@@ -71,4 +71,3 @@ homebrew_casks:
     description: "Inspect helm_release value changes in a Terraform plan before you set sail."
     license: "MIT"
     directory: Casks
-    binary: drydock
