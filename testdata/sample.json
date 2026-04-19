@@ -1,0 +1,56 @@
+{
+  "format_version": "1.2",
+  "resource_changes": [
+    {
+      "address": "helm_release.airflow",
+      "mode": "managed",
+      "type": "helm_release",
+      "name": "airflow",
+      "provider_name": "registry.terraform.io/hashicorp/helm",
+      "change": {
+        "actions": ["update"],
+        "before": {
+          "chart": "airflow",
+          "values": [
+            "executor: CeleryExecutor\nworkers:\n  replicas: 2\n  resources:\n    limits:\n      cpu: 500m\n      memory: 1Gi\nimages:\n  airflow:\n    tag: 2.7.0\n",
+            "scheduler:\n  replicas: 1\n"
+          ],
+          "set": [
+            {"name": "ingress.enabled", "value": "true"}
+          ]
+        },
+        "after": {
+          "chart": "airflow",
+          "values": [
+            "executor: KubernetesExecutor\nworkers:\n  replicas: 4\n  resources:\n    limits:\n      cpu: 1000m\n      memory: 2Gi\nimages:\n  airflow:\n    tag: 2.8.1\n  extraPy:\n    repository: my/extra\n",
+            "scheduler:\n  replicas: 2\n"
+          ],
+          "set": [
+            {"name": "ingress.enabled", "value": "true"},
+            {"name": "ingress.host", "value": "airflow.example.com"}
+          ]
+        }
+      }
+    },
+    {
+      "address": "helm_release.unchanged",
+      "mode": "managed",
+      "type": "helm_release",
+      "name": "unchanged",
+      "provider_name": "registry.terraform.io/hashicorp/helm",
+      "change": {
+        "actions": ["no-op"],
+        "before": {"chart": "foo", "values": ["a: 1\n"]},
+        "after":  {"chart": "foo", "values": ["a: 1\n"]}
+      }
+    },
+    {
+      "address": "aws_s3_bucket.ignored",
+      "mode": "managed",
+      "type": "aws_s3_bucket",
+      "name": "ignored",
+      "provider_name": "aws",
+      "change": {"actions": ["update"], "before": {}, "after": {}}
+    }
+  ]
+}
