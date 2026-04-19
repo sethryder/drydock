@@ -160,7 +160,7 @@ func TestDeepMerge(t *testing.T) {
 		"c": []interface{}{1, 2},
 	}
 	src := map[string]interface{}{
-		"a": 99,                                       // scalar replace
+		"a": 99,                                      // scalar replace
 		"b": map[string]interface{}{"y": 22, "z": 3}, // nested merge
 		"c": []interface{}{9},                        // slice replaced wholesale
 		"d": "new",                                   // new key
