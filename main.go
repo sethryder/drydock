@@ -23,6 +23,13 @@ Usage:
 Flags (apply to all forms):
 `
 
+// Populated at build time by goreleaser via -ldflags.
+var (
+	version = "dev"
+	commit  = "none"
+	date    = "unknown"
+)
+
 func main() {
 	// Split subcommand out before flag parsing so `plan` can pass through its own args.
 	args := os.Args[1:]
@@ -37,11 +44,17 @@ func main() {
 	fs := flag.NewFlagSet("drydock", flag.ExitOnError)
 	noColor := fs.Bool("no-color", false, "disable ANSI color output")
 	onlyRelease := fs.String("release", "", "only show diff for the helm_release with this address (e.g. helm_release.airflow)")
+	showVersion := fs.Bool("version", false, "print version and exit")
 	fs.Usage = func() {
 		fmt.Fprint(os.Stderr, usage)
 		fs.PrintDefaults()
 	}
 	_ = fs.Parse(args)
+
+	if *showVersion {
+		fmt.Printf("drydock %s (commit %s, built %s)\n", version, commit, date)
+		return
+	}
 
 	if fs.NArg() != 1 {
 		fs.Usage()
