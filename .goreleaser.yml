@@ -61,7 +61,7 @@ release:
   draft: false
   prerelease: auto
 
-brews:
+homebrew_casks:
   - name: drydock
     repository:
       owner: sethryder
@@ -70,8 +70,5 @@ brews:
     homepage: "https://github.com/sethryder/drydock"
     description: "Inspect helm_release value changes in a Terraform plan before you set sail."
     license: "MIT"
-    directory: Formula
-    install: |
-      bin.install "drydock"
-    test: |
-      assert_match "drydock", shell_output("#{bin}/drydock --version")
+    directory: Casks
+    binary: drydock
