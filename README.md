@@ -18,11 +18,29 @@ The `terraform-provider-helm` plan output is hard to read:
 
 ## Install
 
+### Homebrew (macOS / Linux)
+
+```sh
+brew install sethryder/tap/drydock
+```
+
+To upgrade later:
+
+```sh
+brew update && brew upgrade drydock
+```
+
+### `go install`
+
 ```sh
 go install github.com/sethryder/drydock@latest
 ```
 
-Or build from source:
+### Pre-built binaries
+
+Download the appropriate archive for your OS/arch from the [latest release](https://github.com/sethryder/drydock/releases/latest), extract it, and put `drydock` on your `$PATH`.
+
+### From source
 
 ```sh
 git clone https://github.com/sethryder/drydock
@@ -30,7 +48,7 @@ cd drydock
 go build -o drydock .
 ```
 
-Requires Go 1.22+. The `drydock plan` subcommand and `.tfplan` input shell out to `terraform`, so that needs to be on your `$PATH` for those workflows.
+Building from source requires Go 1.22+. The `drydock plan` subcommand and `.tfplan` input shell out to `terraform`, so that needs to be on your `$PATH` for those workflows regardless of how you installed.
 
 ## Usage
 
